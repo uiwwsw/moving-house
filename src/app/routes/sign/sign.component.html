@@ -1,0 +1,14 @@
+user:{{ authService.user | async }}
+<br />
+auth:{{ authService.auth.user | async }}
+<br />
+<div *ngIf="authService.user | async as user; else showLogin">
+  <h1>Hello {{ user.displayName }}!</h1>
+  <button (click)="authService.onLogout()">Logout</button>
+</div>
+<ng-template #showLogin>
+  <p>Please login.</p>
+  <button (click)="authService.onLogin()">Login with Google</button>
+</ng-template>
+
+<app-text-field></app-text-field>

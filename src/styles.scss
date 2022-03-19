@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("./reset.css");
+@import url("../node_modules/pretendard/dist/web/static/pretendard-dynamic-subset.css");
+
+:root {
+  --height: 32px;
+  --padding: 8px 16px;
+
+  --color: #333;
+  --color--void: #fff;
+
+  --background-color: #fff;
+  --background-color--void: #333;
+  --background-color--readinly: rgb(176, 176, 176);
+
+  --font-size: 16px;
+  --font-family: "Pretendard";
+
+  --border__color: rgb(46, 46, 46);
+  --border__radius: 6px;
+}
+
+body {
+  font-family: var(--font-family);
+}

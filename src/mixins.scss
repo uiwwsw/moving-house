@@ -1,0 +1,7 @@
+@mixin box() {
+  height: var(--height);
+  padding: var(--padding);
+  color: var(--color);
+  font-size: var(--font-size);
+  box-sizing: content-box;
+}

@@ -1,33 +1,36 @@
 import { NgModule } from '@angular/core';
+import {
+  ScreenTrackingService,
+  UserTrackingService,
+} from '@angular/fire/analytics';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
-import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
-import { provideStorage,getStorage } from '@angular/fire/storage';
+import { SignModule } from './routes/sign/sign.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule.enablePersistence(),
+    AngularFireStorageModule,
+    SignModule,
     AppRoutingModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAnalytics(() => getAnalytics()),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideRemoteConfig(() => getRemoteConfig()),
-    provideStorage(() => getStorage())
+    // provideFirebaseApp(() => initializeApp(environment.firebase)),
+    // provideAnalytics(() => getAnalytics()),
+    // provideAuth(() => getAuth()),
+    // provideFirestore(() => getFirestore()),
+    // provideRemoteConfig(() => getRemoteConfig()),
+    // provideStorage(() => getStorage()),
   ],
-  providers: [
-    ScreenTrackingService,UserTrackingService
-  ],
-  bootstrap: [AppComponent]
+  providers: [ScreenTrackingService, UserTrackingService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
