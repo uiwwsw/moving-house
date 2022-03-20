@@ -8,8 +8,8 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { BrowserModule } from '@angular/platform-browser';
-import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { SignModule } from './routes/sign/sign.module';
 
@@ -21,7 +21,6 @@ import { SignModule } from './routes/sign/sign.module';
     AngularFireAuthModule,
     AngularFirestoreModule.enablePersistence(),
     AngularFireStorageModule,
-    SignModule,
     AppRoutingModule,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideAnalytics(() => getAnalytics()),
