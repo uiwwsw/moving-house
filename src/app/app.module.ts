@@ -11,17 +11,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
-import { SignModule } from './routes/sign/sign.module';
+import { SignModule } from './modules/sign/sign.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    SignModule,
+    AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule.enablePersistence(),
     AngularFireStorageModule,
-    AppRoutingModule,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideAnalytics(() => getAnalytics()),
     // provideAuth(() => getAuth()),

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { BehaviorSubject, Observable, Observer } from 'rxjs';
-import { CookieService } from '../cookie/cookie.service';
+import { CookieService } from '../storage/storage.service';
 @Injectable({
   providedIn: 'root',
 })

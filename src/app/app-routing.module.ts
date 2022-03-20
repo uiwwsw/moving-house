@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { NotFoundComponent } from './routes/not-found/not-found.component'; // CLI imports router
+import { NotFoundComponent } from './routes/not-found/not-found.component';
+import { IndexComponent } from './routes/index/index.component'; // CLI imports router
+
 // import { SignComponent } from './routes/sign/sign.component';
 
 const routes: Routes = [
   {
-    path: 'not-found',
+    path: '',
+    component: IndexComponent,
+  },
+  {
+    path: '**',
     component: NotFoundComponent,
   },
 ];
@@ -18,6 +24,6 @@ const routes: Routes = [
     }),
   ],
   exports: [RouterModule],
-  declarations: [NotFoundComponent],
+  declarations: [NotFoundComponent, IndexComponent],
 })
 export class AppRoutingModule {}
