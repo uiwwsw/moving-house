@@ -1,10 +1,19 @@
-<div *ngIf="authService.user | async as user; else showLogin">
+<div>
+  <p>Please login.</p>
+  <button (click)="authService.onLogin()">
+    <i class="fa-brands fa-google"></i> Login with Google
+  </button>
+</div>
+
+<!-- <div *ngIf="authService.user | async as user; else showLogin">
   <h1>Hello {{ user.displayName }}!</h1>
   <button (click)="authService.onLogout()">Logout</button>
 </div>
 <ng-template #showLogin>
   <p>Please login.</p>
-  <button (click)="authService.onLogin()">Login with Google</button>
+  <button (click)="authService.onLogin()">
+    <i class="fa-brands fa-google"></i> Login with Google
+  </button>
 </ng-template>
-
-<app-text-field></app-text-field>
+ -->
+<app-input></app-input>

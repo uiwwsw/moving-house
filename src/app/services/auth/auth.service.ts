@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
-import { BehaviorSubject, Observable, Observer } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { CookieService } from '../storage/storage.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(public auth: AngularFireAuth, public cookie: CookieService) {
+  constructor(
+    private auth: AngularFireAuth,
+    private cookie: CookieService,
+    private router: Router
+  ) {
     this.auth.user.subscribe((user) => {
       this.cookie.set('user', user);
       this.user.next(user);
+      user && this.router.url === '/sign' && this.router.navigate(['/']);
     });
   }
   // user = new Observable<firebase.User | null>(
