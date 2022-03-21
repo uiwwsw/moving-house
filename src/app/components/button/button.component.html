@@ -1,4 +1,6 @@
 <button>
-  <ng-content></ng-content>
-  <app-spinner></app-spinner>
+  <app-spinner *ngIf="loading; else content"></app-spinner>
+  <ng-template #content>
+    <ng-content></ng-content>
+  </ng-template>
 </button>
