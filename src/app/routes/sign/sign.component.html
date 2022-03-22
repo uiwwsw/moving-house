@@ -1,10 +1,12 @@
 <div>
   <p>Please login.</p>
-  <button (click)="authService.onLogin()">
+  <app-button (click)="authService.onLogin()">
     <i class="fa-brands fa-google"></i> Login with Google
-  </button>
+  </app-button>
 </div>
-
+<!-- <div *ngFor="let item of authService.items | async">
+  {{ item.dawdw }}
+</div> -->
 <!-- <div *ngIf="authService.user | async as user; else showLogin">
   <h1>Hello {{ user.displayName }}!</h1>
   <button (click)="authService.onLogout()">Logout</button>

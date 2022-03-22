@@ -1,8 +1,11 @@
 @import "../../../mixins.scss";
+:host {
+  display: inline-block;
+}
 label {
-  position: relative;
-  display: block;
   @include box();
+  position: relative;
+  display: inline-block;
   input {
     display: block;
     width: 100%;

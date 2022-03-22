@@ -1,23 +1,56 @@
+import { Firestore, collectionData, collection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
 import { BehaviorSubject } from 'rxjs';
 import { CookieService } from '../storage/storage.service';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument,
+} from '@angular/fire/compat/firestore';
+export interface UserInfo {
+  admin?: true;
+  mobilityHouses?: string[];
+  uid: string;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private userInfoDoc?: AngularFirestoreDocument<UserInfo>;
+  userInfo?: BehaviorSubject<UserInfo | undefined>;
+  // userInfo = new BehaviorSubject<UserInfo | undefined>(undefined);
+  // private itemsCollection: AngularFirestoreCollection<any>;
+  loggedIn: boolean | null = null;
   constructor(
-    private auth: AngularFireAuth,
-    private cookie: CookieService,
-    private router: Router
+    private afs: AngularFirestore,
+    private auth: AngularFireAuth // private router: Router
   ) {
     this.auth.user.subscribe((user) => {
-      this.cookie.set('user', user);
-      this.user.next(user);
-      user && this.router.url === '/sign' && this.router.navigate(['/']);
+      if (user) {
+        this.loggedIn = true;
+        this.userInfo = new BehaviorSubject<UserInfo | undefined>(undefined);
+        this.userInfoDoc = afs.doc<UserInfo>(`users/${user.uid}`);
+        this.userInfoDoc
+          .valueChanges()
+          .subscribe((x) => this.userInfo!.next(x));
+      } else {
+        this.loggedIn = false;
+        this.userInfo?.next(undefined);
+        this.userInfo?.complete();
+      }
     });
+
+    // this.userInfo.subscribe((x) => {
+    //   console.log(x, 'djawkldjawkjdlkawjdawd');
+    // });
+    // this.itemsCollection = afs.collection<any>('users');
+    // this.items = this.itemsCollection.valueChanges();
+    // const col = collection(firestore, 'users');
+    // this.item$ = collectionData(col);
   }
   // user = new Observable<firebase.User | null>(
   //   (observer: Observer<firebase.User | null>) => {
@@ -25,7 +58,8 @@ export class AuthService {
   //     observer.next(cookieUser);
   //   }
   // );
-  user = new BehaviorSubject<firebase.User | null>(this.cookie.get('user'));
+  // user = new BehaviorSubject<firebase.User | null>(this.cookie.get('user'));
+  // userInfo = new BehaviorSubject<UserInfo | undefined>(undefined);
 
   onLogin() {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());

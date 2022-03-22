@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: 'sign',
     component: SignComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
 ];
 

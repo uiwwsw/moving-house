@@ -13,9 +13,9 @@ export class AuthGuard implements CanActivate {
   loggedIn: boolean = false;
   // ↓ 수정
   constructor(private router: Router, private auth: AuthService) {
-    this.auth.user.subscribe((res) => {
-      this.loggedIn = !!res;
-    });
+    // this.auth.user.subscribe((res) => {
+    //   this.loggedIn = !!res;
+    // });
   }
 
   canActivate(

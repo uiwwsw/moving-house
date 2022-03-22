@@ -1,0 +1,26 @@
+@import "../../../mixins.scss";
+// <button>
+//   <app-spinner *ngIf="loading; else content"></app-spinner>
+//   <ng-template #content>
+//     <ng-content></ng-content>
+//   </ng-template>
+// </button>
+:host {
+  display: inline-block;
+  color: var(--color);
+}
+button {
+  @include box();
+  position: relative;
+  color: inherit;
+  border: 1px solid var(--border__color);
+  border-radius: var(--border__radius);
+  background: none;
+  app-spinner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}

@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InputComponent } from '../../components/input/input.component';
+import { NgModule } from '@angular/core';
+import { ComponentsModule } from '../components/components.module';
+import { AuthGuard } from '../../guards/auth/auth.guard';
 import { SignComponent } from '../../routes/sign/sign.component';
 import { SignRoutingModule } from './sign-routing.module';
-import { AuthGuard } from '../../guards/auth/auth.guard';
 @NgModule({
   providers: [AuthGuard],
-  declarations: [InputComponent, SignComponent],
-  imports: [CommonModule, SignRoutingModule],
+  declarations: [SignComponent],
+  imports: [CommonModule, ComponentsModule, SignRoutingModule],
 })
 export class SignModule {}

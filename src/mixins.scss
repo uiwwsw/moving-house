@@ -1,4 +1,5 @@
 @mixin box() {
+  min-width: var(--width--min);
   height: var(--height);
   padding: var(--padding);
   color: var(--color);
