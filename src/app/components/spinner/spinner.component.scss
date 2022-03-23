@@ -1,10 +1,10 @@
 :host {
-  display: flex;
-  align-items: center;
+  display: block;
 }
 i {
-  flex: 1;
-  font-size: 1.7em;
+  display: block;
+  text-align: center;
+  font-size: 20px;
   animation: rotate 1s linear infinite;
   @keyframes rotate {
     100% {

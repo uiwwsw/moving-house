@@ -17,9 +17,9 @@ label {
     box-shadow: 0 0 100px var(--background-color) inset;
     background: none;
     &:read-only {
-      box-shadow: 0 0 100px var(--background-color--readinly) inset;
+      box-shadow: 0 0 100px var(--background-color--readonly) inset;
       & + i {
-        background: var(--background-color--readinly);
+        background: var(--background-color--readonly);
       }
     }
   }

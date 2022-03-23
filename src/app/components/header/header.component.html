@@ -1,4 +1,28 @@
-<button (click)="authService.onLogout()">Logout</button>
-<header>
-  <button><i class="fa-solid fa-house"></i></button>
+<!-- <button (click)="authService.onLogout()">Logout</button> -->
+<header class="header">
+  <button class="header__home" (click)="goPage('/')">
+    <i class="fa-solid fa-house"></i>
+  </button>
+  <h1 class="header__title">{{ headerService.title | async }}</h1>
+  <app-spinner
+    class="header__spinner"
+    *ngIf="authService.loggedIn === null; else loaded"
+  ></app-spinner>
+  <ng-template #loaded>
+    <button
+      *ngIf="!authService.loggedIn; else loggedIn"
+      class="header__auth"
+      (click)="goPage('sign')"
+    >
+      <i class="fa-solid fa-user"></i>
+    </button>
+    <ng-template #loggedIn>
+      <button
+        class="header__auth header__auth--logged-in"
+        (click)="headerService.toggleDropDownMenu()"
+      >
+        <i class="fa-solid fa-user-check"></i>
+      </button>
+    </ng-template>
+  </ng-template>
 </header>

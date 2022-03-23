@@ -2,6 +2,16 @@
 @import url("../node_modules/pretendard/dist/web/static/pretendard-dynamic-subset.css");
 
 :root {
+  --z-index__header: 10;
+  --z-index__header__bg: 9;
+  --z-index__header__bd: 8;
+
+  --body__mobile-width: 400px;
+  --body__padding-vertical: 18px;
+  --body__padding-horizon: 24px;
+
+  --header__height: 60px;
+
   --width--min: 100px;
   --height: 32px;
   --padding: 8px 16px;
@@ -11,7 +21,7 @@
 
   --background-color: #fff;
   --background-color--void: #333;
-  --background-color--readinly: rgb(176, 176, 176);
+  --background-color--readonly: rgb(176, 176, 176);
 
   --font-size: 16px;
   --font-family: "Pretendard";
@@ -19,7 +29,12 @@
   --border__color: rgb(46, 46, 46);
   --border__radius: 6px;
 }
-
+html {
+  overflow-x: hidden;
+}
 body {
   font-family: var(--font-family);
+  max-width: var(--body__mobile-width);
+  margin: auto;
+  padding: 0 var(--body__padding-horizon) var(--body__padding-vertical);
 }
