@@ -1,12 +1,18 @@
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class HeaderService {
+  // @ViewChild('dropDownMenu')
+  // dropDownMenuElement?: ElementRef<HTMLDivElement>;
+
   title = new BehaviorSubject<string>('');
   dropDownMenu = new BehaviorSubject<boolean>(false);
-  toggleDropDownMenu() {
-    this.dropDownMenu.next(!this.dropDownMenu.value);
+  showDropDownMenu() {
+    this.dropDownMenu.next(true);
+  }
+  hideDropDownMenu() {
+    this.dropDownMenu.next(false);
   }
 }

@@ -1,46 +1,61 @@
-import { Firestore, collectionData, collection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
-import firebase from 'firebase/compat/app';
-import { BehaviorSubject } from 'rxjs';
-import { CookieService } from '../storage/storage.service';
 import {
   AngularFirestore,
-  AngularFirestoreCollection,
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
+import firebase from 'firebase/compat/app';
+import { BehaviorSubject } from 'rxjs';
+import { StorageService } from '../storage/storage.service';
 export interface UserInfo {
-  admin?: true;
+  admin?: ADMIN;
   mobilityHouses?: string[];
-  uid: string;
+  updated?: firebase.firestore.Timestamp;
+  created: firebase.firestore.Timestamp;
+}
+export enum ADMIN {
+  MANAGER = 1,
+  OWNER = 100,
 }
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private userInfoDoc?: AngularFirestoreDocument<UserInfo>;
-  userInfo?: BehaviorSubject<UserInfo | undefined>;
+  userInfo: BehaviorSubject<UserInfo | undefined>;
   // userInfo = new BehaviorSubject<UserInfo | undefined>(undefined);
   // private itemsCollection: AngularFirestoreCollection<any>;
-  loggedIn: boolean | null = null;
+  get isLoggedIn() {
+    return !!this.userInfo.value;
+  }
   constructor(
     private afs: AngularFirestore,
-    private auth: AngularFireAuth // private router: Router
+    private auth: AngularFireAuth,
+    private storage: StorageService
   ) {
+    const userInfo = this.storage.get<UserInfo>('userInfo');
+    this.userInfo = new BehaviorSubject<UserInfo | undefined>(userInfo);
     this.auth.user.subscribe((user) => {
+      console.log(user, 'ddasdljlkawjd');
       if (user) {
-        this.loggedIn = true;
-        this.userInfo = new BehaviorSubject<UserInfo | undefined>(undefined);
+        this.userInfo = new BehaviorSubject<UserInfo | undefined>(userInfo);
         this.userInfoDoc = afs.doc<UserInfo>(`users/${user.uid}`);
-        this.userInfoDoc
-          .valueChanges()
-          .subscribe((x) => this.userInfo!.next(x));
+        this.userInfoDoc.valueChanges().subscribe((x) => {
+          console.log('로그인만', x);
+          if (x) {
+            this.userInfo.next(x);
+            this.storage.set('userInfo', x);
+          } else {
+            // 첫 로그인(가입) 시 users콜렉션에 user 생성
+            this.userInfoDoc!.set({
+              created: firebase.firestore.Timestamp.now(),
+            });
+          }
+        });
       } else {
-        this.loggedIn = false;
-        this.userInfo?.next(undefined);
-        this.userInfo?.complete();
+        this.userInfo.next(undefined);
+        this.userInfo.complete();
+        this.storage.remove('userInfo');
       }
     });
 

@@ -13,7 +13,7 @@ enum STORAGE_TYPE {
 @Injectable({
   providedIn: 'root',
 })
-export class CookieService {
+export class StorageService {
   getStorage(type: STORAGE_TYPE) {
     if (type === STORAGE_TYPE.COOKIE) return Cookies;
     let storage = localStorage;
@@ -43,10 +43,9 @@ export class CookieService {
   }
   get<T>(key: string, type: STORAGE_TYPE = STORAGE_TYPE.LOCAL) {
     const storage = this.getStorage(type);
-    console.log(storage, 'sjdklawjdaw');
     const value = storage.get(key);
     if (value) return JSON.parse(value) as T;
-    return null;
+    return undefined;
   }
   remove(key: string, type: STORAGE_TYPE = STORAGE_TYPE.LOCAL) {
     const storage = this.getStorage(type);

@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ComponentsModule } from '../components/components.module';
-import { AuthGuard } from '../../guards/auth/auth.guard';
-import { SignComponent } from '../../routes/sign/sign.component';
-import { SignRoutingModule } from './sign-routing.module';
+import { AdminGuard } from '../../guards/admin/admin.guard';
+import { AdminComponent } from '../../routes/admin/admin.component';
+import { AdminRoutingModule } from './admin-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
-  providers: [AuthGuard],
-  declarations: [SignComponent],
+  providers: [AdminGuard],
+  declarations: [AdminComponent],
   imports: [
     CommonModule,
     ComponentsModule,
-    SignRoutingModule,
+    AdminRoutingModule,
     BrowserAnimationsModule,
   ],
 })
-export class SignModule {}
+export class AdminModule {}

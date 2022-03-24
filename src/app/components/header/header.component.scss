@@ -31,7 +31,7 @@
   //   right: -9999px;
   //   height: 1px;
   //   opacity: 0.5;
-  //   background: var(--border__color);
+  //   background: var(--border-color);
   // }
   &__home,
   &__auth {
@@ -51,5 +51,21 @@
     flex: auto;
     padding: 0 var(--body__padding-horizon);
     text-align: center;
+  }
+  &__menu {
+    position: absolute;
+    right: 0;
+    padding: var(--padding);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--background-color);
+    &__layer {
+      z-index: -1;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
   }
 }

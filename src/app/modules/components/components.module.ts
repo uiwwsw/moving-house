@@ -4,22 +4,22 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { SpinnerComponent } from '../../components/spinner/spinner.component';
 import { ButtonComponent } from '../../components/button/button.component';
 import { InputComponent } from '../../components/input/input.component';
-import { HeaderBgComponent } from '../../components/header-bg/header-bg.component';
+import { PicComponent } from '../../components/pic/pic.component';
 @NgModule({
   imports: [CommonModule],
   declarations: [
+    PicComponent,
     InputComponent,
     ButtonComponent,
     HeaderComponent,
     SpinnerComponent,
-    HeaderBgComponent,
   ],
   exports: [
+    PicComponent,
     InputComponent,
     ButtonComponent,
     HeaderComponent,
     SpinnerComponent,
-    HeaderBgComponent,
   ],
 })
 export class ComponentsModule {}

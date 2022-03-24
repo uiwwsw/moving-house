@@ -12,13 +12,17 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignModule } from './modules/sign/sign.module';
+import { AdminModule } from './modules/admin/admin.module';
 import { ComponentsModule } from './modules/components/components.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserAnimationsModule,
     ComponentsModule,
     SignModule,
+    AdminModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,

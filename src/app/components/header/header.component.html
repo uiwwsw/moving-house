@@ -4,13 +4,38 @@
     <i class="fa-solid fa-house"></i>
   </button>
   <h1 class="header__title">{{ headerService.title | async }}</h1>
-  <app-spinner
+  <button
+    *ngIf="!authService.isLoggedIn; else loggedIn"
+    class="header__auth"
+    (click)="goPage('sign')"
+  >
+    <i class="fa-solid fa-user"></i>
+  </button>
+  <ng-template #loggedIn>
+    <button
+      class="header__auth header__auth--logged-in"
+      (click)="headerService.showDropDownMenu()"
+    >
+      <i class="fa-solid fa-user-check"></i>
+    </button>
+  </ng-template>
+  <div *ngIf="headerService.dropDownMenu | async" class="header__menu">
+    <ul class="header__menu__list">
+      <li><button (click)="authService.onLogout()">로그아웃</button></li>
+    </ul>
+    <i
+      class="header__menu__layer"
+      tabindex="0"
+      (focus)="headerService.hideDropDownMenu()"
+    ></i>
+  </div>
+  <!-- <app-spinner
     class="header__spinner"
-    *ngIf="authService.loggedIn === null; else loaded"
+    *ngIf="authService.isLoggedIn === null; else loaded"
   ></app-spinner>
   <ng-template #loaded>
     <button
-      *ngIf="!authService.loggedIn; else loggedIn"
+      *ngIf="!authService.isLoggedIn; else loggedIn"
       class="header__auth"
       (click)="goPage('sign')"
     >
@@ -19,10 +44,20 @@
     <ng-template #loggedIn>
       <button
         class="header__auth header__auth--logged-in"
-        (click)="headerService.toggleDropDownMenu()"
+        (click)="headerService.showDropDownMenu()"
       >
         <i class="fa-solid fa-user-check"></i>
       </button>
     </ng-template>
-  </ng-template>
+    <div *ngIf="headerService.dropDownMenu | async" class="header__menu">
+      <ul class="header__menu__list">
+        <li><button (click)="authService.onLogout()">로그아웃</button></li>
+      </ul>
+      <i
+        class="header__menu__layer"
+        tabindex="0"
+        (focus)="headerService.hideDropDownMenu()"
+      ></i>
+    </div>
+  </ng-template> -->
 </header>
