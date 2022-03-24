@@ -4,6 +4,7 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { StorageService } from '../storage/storage.service';
@@ -22,7 +23,7 @@ export enum ADMIN {
 })
 export class AuthService {
   private userInfoDoc?: AngularFirestoreDocument<UserInfo>;
-  private userInfoDocRef?: Observable<UserInfo | undefined>;
+  private userInfoDocRef?: Subscription;
   userInfo: BehaviorSubject<UserInfo | undefined>;
   // userInfo = new BehaviorSubject<UserInfo | undefined>(undefined);
   // private itemsCollection: AngularFirestoreCollection<any>;
@@ -32,27 +33,24 @@ export class AuthService {
   constructor(
     private afs: AngularFirestore,
     private auth: AngularFireAuth,
-    private storage: StorageService
+    private storage: StorageService,
+    private router: Router
   ) {
     const userInfo = this.storage.get<UserInfo>('userInfo');
     this.userInfo = new BehaviorSubject<UserInfo | undefined>(userInfo);
     this.auth.user.subscribe((user) => {
       if (user) {
         this.userInfoDoc = afs.doc<UserInfo>(`users/${user.uid}`);
-        this.userInfoDoc.valueChanges().subscribe((x) => {
-          console.log('로그인만', x);
-          if (x) {
-            this.userInfo.next(x);
-            this.storage.set('userInfo', x);
-          } else {
-            console.log('회원가입');
-            // 첫 로그인(가입) 시 users콜렉션에 user 생성
+        this.userInfoDocRef = this.userInfoDoc.valueChanges().subscribe((x) => {
+          if (!x)
             this.userInfoDoc!.set({
               created: firebase.firestore.Timestamp.now(),
             });
-          }
+          this.userInfo.next(x);
+          this.storage.set('userInfo', x);
         });
       } else {
+        this.userInfoDocRef?.unsubscribe();
         this.userInfo.next(undefined);
         this.userInfo.complete();
         this.storage.remove('userInfo');

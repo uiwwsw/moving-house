@@ -19,7 +19,11 @@
       <i class="fa-solid fa-user-check"></i>
     </button>
   </ng-template>
-  <div *ngIf="headerService.dropDownMenu | async" class="header__menu">
+  <div
+    *ngIf="headerService.dropDownMenu | async"
+    class="header__menu"
+    (click)="headerService.hideDropDownMenu()"
+  >
     <ul class="header__menu__list">
       <li><button (click)="authService.onLogout()">로그아웃</button></li>
     </ul>
