@@ -10,6 +10,10 @@ export class IndexComponent implements OnInit {
   constructor(private headerService: HeaderService) {
     this.headerService.title.next('움직이는하우스');
   }
+  test() {
+    console.log('test');
+  }
+  list = ['1', '2', '3'];
 
   ngOnInit(): void {}
 }

@@ -1,1 +1,10 @@
 <div>메인페이지</div>
+<app-grid (load)="test()">
+  <app-card
+    *ngFor="let item of list"
+    src="http://placeimg.com/640/480/any"
+    [tag]="list"
+  ></app-card>
+</app-grid>
+
+<app-card src="http://placeimg.com/640/480/any" [tag]="['d', 'v']"></app-card>

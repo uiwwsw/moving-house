@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   loading = false;
+  items = [1, 2, 3];
   constructor() {}
   async click() {
     this.loading = true;

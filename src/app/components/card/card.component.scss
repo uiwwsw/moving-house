@@ -1,0 +1,26 @@
+// <div class="card">
+//   <app-pic [src]="src" [alt]="alt"></app-pic>
+//   <strong>{{ name }}</strong>
+//   <p>{{ tag }}</p>
+//   <span>{{ price }}</span>
+// </div>
+.card {
+  flex: 1;
+  app-pic {
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    border-radius: var(--border-radius);
+  }
+  strong {
+    font-weight: 600;
+    display: block;
+    font-size: 1.1em;
+  }
+  p {
+    font-size: 1em;
+  }
+  span {
+    font-size: 0.9em;
+  }
+}

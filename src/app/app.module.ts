@@ -8,13 +8,13 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SignModule } from './modules/sign/sign.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { ComponentsModule } from './modules/components/components.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SignModule } from './modules/sign/sign.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [

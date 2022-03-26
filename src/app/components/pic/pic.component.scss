@@ -1,0 +1,11 @@
+:host {
+  display: inline-block;
+}
+picture {
+  display: block;
+  width: 100%;
+  img {
+    display: inherit;
+    width: inherit;
+  }
+}

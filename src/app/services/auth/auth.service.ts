@@ -6,6 +6,8 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
+import { debounceTime } from 'rxjs/operators';
+
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { StorageService } from '../storage/storage.service';
 export interface UserInfo {
@@ -41,14 +43,17 @@ export class AuthService {
     this.auth.user.subscribe((user) => {
       if (user) {
         this.userInfoDoc = afs.doc<UserInfo>(`users/${user.uid}`);
-        this.userInfoDocRef = this.userInfoDoc.valueChanges().subscribe((x) => {
-          if (!x)
-            this.userInfoDoc!.set({
-              created: firebase.firestore.Timestamp.now(),
-            });
-          this.userInfo.next(x);
-          this.storage.set('userInfo', x);
-        });
+        this.userInfoDocRef = this.userInfoDoc
+          .valueChanges()
+          .pipe(debounceTime(500))
+          .subscribe((x) => {
+            if (!x)
+              this.userInfoDoc!.set({
+                created: firebase.firestore.Timestamp.now(),
+              });
+            this.userInfo.next(x);
+            this.storage.set('userInfo', x);
+          });
       } else {
         this.userInfoDocRef?.unsubscribe();
         this.userInfo.next(undefined);
