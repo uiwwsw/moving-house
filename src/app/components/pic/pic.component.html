@@ -1,3 +1,11 @@
 <picture>
-  <img [src]="src" [alt]="alt" />
+  <img
+    [width]="width"
+    [height]="height"
+    [class.loaded]="loaded"
+    [src]="src"
+    [alt]="alt"
+    (load)="loaded = true"
+  />
+  <app-spinner *ngIf="!loaded"></app-spinner>
 </picture>

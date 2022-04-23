@@ -14,25 +14,27 @@
   <ng-template #loggedIn>
     <button
       class="header__auth header__auth--logged-in"
-      (click)="headerService.showDropDownMenu()"
+      (click)="showDropDownMenu()"
     >
       <i class="fa-solid fa-user-check"></i>
     </button>
+    <div
+      *ngIf="headerService.dropDownMenu | async"
+      class="header__menu"
+      (click)="hideDropDownMenu($event)"
+    >
+      <ul class="header__menu__list">
+        <li *ngFor="let menu of isDropMenuList">
+          <button>{{ menu }}</button>
+        </li>
+      </ul>
+      <i
+        class="header__menu__layer"
+        tabindex="0"
+        (focus)="hideDropDownMenu()"
+      ></i>
+    </div>
   </ng-template>
-  <div
-    *ngIf="headerService.dropDownMenu | async"
-    class="header__menu"
-    (click)="headerService.hideDropDownMenu()"
-  >
-    <ul class="header__menu__list">
-      <li><button (click)="authService.onLogout()">로그아웃</button></li>
-    </ul>
-    <i
-      class="header__menu__layer"
-      tabindex="0"
-      (focus)="headerService.hideDropDownMenu()"
-    ></i>
-  </div>
   <!-- <app-spinner
     class="header__spinner"
     *ngIf="authService.isLoggedIn === null; else loaded"

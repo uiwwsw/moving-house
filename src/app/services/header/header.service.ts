@@ -1,5 +1,8 @@
-import { ElementRef, Injectable, ViewChild } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+export enum DROP_MENU_ACTION {
+  LOGOUT = '로그아웃',
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -9,10 +12,4 @@ export class HeaderService {
 
   title = new BehaviorSubject<string>('');
   dropDownMenu = new BehaviorSubject<boolean>(false);
-  showDropDownMenu() {
-    this.dropDownMenu.next(true);
-  }
-  hideDropDownMenu() {
-    this.dropDownMenu.next(false);
-  }
 }

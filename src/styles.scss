@@ -14,8 +14,12 @@
   --height: 32px;
   --padding: 8px 16px;
 
-  --color: #333;
-  --color--void: #fff;
+  --primary: #009688;
+  --void: #fff;
+  --solid: #333;
+
+  --color: var(--solid);
+  --color--void: var(--void);
 
   --background-color: #fff;
   --background-color--void: #333;

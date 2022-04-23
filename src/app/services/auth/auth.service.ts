@@ -11,15 +11,15 @@ import { debounceTime } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { StorageService } from '../storage/storage.service';
 export interface UserInfo {
-  admin?: ADMIN;
+  admin?: true;
   mobilityHouses?: string[];
   updated?: firebase.firestore.Timestamp;
   created: firebase.firestore.Timestamp;
 }
-export enum ADMIN {
-  MANAGER = 1,
-  OWNER = 100,
-}
+// export enum ADMIN {
+//   MANAGER = 1,
+//   OWNER = 100,
+// }
 @Injectable({
   providedIn: 'root',
 })
@@ -54,21 +54,13 @@ export class AuthService {
             this.userInfo.next(x);
             this.storage.set('userInfo', x);
           });
+        this.router.url === '/sign' && this.router.navigate(['/']);
       } else {
         this.userInfoDocRef?.unsubscribe();
         this.userInfo.next(undefined);
-        this.userInfo.complete();
         this.storage.remove('userInfo');
       }
     });
-
-    // this.userInfo.subscribe((x) => {
-    //   console.log(x, 'djawkldjawkjdlkawjdawd');
-    // });
-    // this.itemsCollection = afs.collection<any>('users');
-    // this.items = this.itemsCollection.valueChanges();
-    // const col = collection(firestore, 'users');
-    // this.item$ = collectionData(col);
   }
   // user = new Observable<firebase.User | null>(
   //   (observer: Observer<firebase.User | null>) => {
@@ -78,23 +70,19 @@ export class AuthService {
   // );
   // user = new BehaviorSubject<firebase.User | null>(this.cookie.get('user'));
   // userInfo = new BehaviorSubject<UserInfo | undefined>(undefined);
-
+  // onVerifyPhone(phone: string) {
+  //   this.auth
+  //     .signInWithPhoneNumber(
+  //       phone,
+  //       new firebase.auth.RecaptchaVerifier('phone')
+  //     )
+  //     .then(async (confirmationResult) => {
+  //       const d = window.prompt() as string;
+  //       confirmationResult.confirm(d);
+  //     });
+  // }
   onLogin() {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-
-    // this.auth
-    //   .signInWithPhoneNumber(
-    //     '+821021936087',
-    //     new firebase.auth.RecaptchaVerifier('ddd')
-    //   )
-    //   .then(async (confirmationResult) => {
-    //     // SMS sent. Prompt user to type the code from the message, then sign the
-    //     // user in with confirmationResult.confirm(code).
-    //     // window.confirm()
-    //     const d = window.prompt() as string;
-    //     confirmationResult.confirm(d);
-    //     // ...
-    //   });
   }
   onLogout() {
     this.auth.signOut();

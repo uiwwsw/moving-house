@@ -2,9 +2,14 @@
 <app-grid (load)="test()">
   <app-card
     *ngFor="let item of list"
-    src="http://placeimg.com/640/480/any"
+    [width]="400"
+    [height]="300"
     [tag]="list"
+    src="http://placeimg.com/640/480/any"
   ></app-card>
 </app-grid>
-
-<app-card src="http://placeimg.com/640/480/any" [tag]="['d', 'v']"></app-card>
+<div class="dddd" *ngFor="let idd of houseService.houses | async">
+  {{ idd.created_at.toDate() | date: "YYYY/MM/dd" }}
+  {{ idd.desc }}
+  {{ idd.uid }}
+</div>

@@ -2,10 +2,22 @@
   display: inline-block;
 }
 picture {
+  position: relative;
   display: block;
   width: 100%;
+  background: var(--background-color--readonly);
   img {
     display: inherit;
     width: inherit;
+    visibility: hidden;
+    &.loaded {
+      visibility: visible;
+    }
+  }
+  app-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
