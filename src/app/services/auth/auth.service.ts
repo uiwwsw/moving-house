@@ -6,13 +6,13 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { StorageService } from '../storage/storage.service';
+
 export interface UserInfo {
   admin?: true;
-  mobilityHouses?: string[];
+  houses?: string[];
   updated?: firebase.firestore.Timestamp;
   created: firebase.firestore.Timestamp;
 }
@@ -52,6 +52,7 @@ export class AuthService {
                 created: firebase.firestore.Timestamp.now(),
               });
             this.userInfo.next(x);
+
             this.storage.set('userInfo', x);
           });
         this.router.url === '/sign' && this.router.navigate(['/']);

@@ -24,7 +24,7 @@ export interface House {
 })
 export class HouseService {
   private houseColl: AngularFirestoreCollection<House>;
-  public houses: Observable<House[]>;
+  houses: Observable<House[]>;
   // private houseCollRef: Subscription;
   // house: BehaviorSubject<House[]>;
   constructor(private afs: AngularFirestore) {

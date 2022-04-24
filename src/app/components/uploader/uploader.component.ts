@@ -1,0 +1,37 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth/auth.service';
+
+@Component({
+  selector: 'app-uploader',
+  templateUrl: './uploader.component.html',
+  styleUrls: ['./uploader.component.scss'],
+})
+export class UploaderComponent implements OnInit {
+  @Input() directory: string = '';
+  @Input() id: string = '';
+  uploadPercent: Observable<number | undefined> | undefined;
+  downloadURL: Observable<string> | undefined;
+  constructor(private storage: AngularFireStorage) {}
+
+  ngOnInit(): void {}
+
+  uploadFile(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    const file = files ? files[0] : '';
+    if (!file) return;
+    const filePath = `/${this.directory}/${this.id}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+
+    // observe percentage changes
+    this.uploadPercent = task.percentageChanges();
+    // get notified when the download URL is available
+    task
+      .snapshotChanges()
+      .pipe(finalize(() => (this.downloadURL = fileRef.getDownloadURL())))
+      .subscribe();
+  }
+}

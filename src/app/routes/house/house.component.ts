@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderService } from 'src/app/services/header/header.service';
 import { ScrollMixin } from 'src/app/mixins/scroll/scroll.mixin';
 import { HouseService } from 'src/app/services/house/house.service';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss'],
+  selector: 'app-house',
+  templateUrl: './house.component.html',
+  styleUrls: ['./house.component.scss'],
 })
-export class IndexComponent extends ScrollMixin implements OnInit {
+export class HouseComponent extends ScrollMixin implements OnInit {
   constructor(
     private headerService: HeaderService,
     public houseService: HouseService
