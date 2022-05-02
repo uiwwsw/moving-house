@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AdminModule } from './modules/admin/admin.module';
 import { ComponentsModule } from './modules/components/components.module';
 import { SignModule } from './modules/sign/sign.module';
+import { HouseModule } from './modules/house/house.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -22,6 +23,7 @@ import { SignModule } from './modules/sign/sign.module';
     BrowserAnimationsModule,
     ComponentsModule,
     SignModule,
+    HouseModule,
     AdminModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),

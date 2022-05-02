@@ -8,8 +8,14 @@
     src="http://placeimg.com/640/480/any"
   ></app-card>
 </app-grid>
-<div class="dddd" *ngFor="let idd of houseService.houses | async">
-  {{ idd.created_at.toDate() | date: "YYYY/MM/dd" }}
-  {{ idd.desc }}
-  {{ idd.uid }}
-</div>
+<app-grid (load)="test()">
+  <app-card
+    *ngFor="let house of houseService.houses | async"
+    [width]="400"
+    [height]="300"
+    [tag]="list"
+    [name]="house.title"
+    [price]="house.price"
+    src="http://placeimg.com/640/480/any"
+  ></app-card>
+</app-grid>

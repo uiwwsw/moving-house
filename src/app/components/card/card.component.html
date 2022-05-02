@@ -2,5 +2,5 @@
   <app-pic [width]="width" [height]="height" [src]="src" [alt]="alt"></app-pic>
   <strong>{{ name }}</strong>
   <p>{{ isTags }}</p>
-  <span>{{ price }}</span>
+  <span *ngIf="price">{{ price }}</span>
 </div>

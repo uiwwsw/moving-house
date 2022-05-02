@@ -26,6 +26,7 @@ import { NotFoundComponent } from '../../routes/not-found/not-found.component';
   ],
   exports: [
     NotFoundComponent,
+    UploaderComponent,
     IndexComponent,
     PicComponent,
     InputComponent,

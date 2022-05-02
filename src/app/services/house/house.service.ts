@@ -3,11 +3,8 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { StorageService } from '../storage/storage.service';
+import { Observable } from 'rxjs';
 
 export interface House {
   updated_at: firebase.firestore.Timestamp;

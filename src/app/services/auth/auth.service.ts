@@ -55,7 +55,6 @@ export class AuthService {
 
             this.storage.set('userInfo', x);
           });
-        this.router.url === '/sign' && this.router.navigate(['/']);
       } else {
         this.userInfoDocRef?.unsubscribe();
         this.userInfo.next(undefined);
@@ -83,7 +82,9 @@ export class AuthService {
   //     });
   // }
   onLogin() {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    this.auth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(() => this.router.navigate(['/']));
   }
   onLogout() {
     this.auth.signOut();

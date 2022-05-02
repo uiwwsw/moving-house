@@ -19,8 +19,10 @@ export class UploaderComponent implements OnInit {
   ngOnInit(): void {}
 
   uploadFile(event: Event) {
-    const files = (event.target as HTMLInputElement).files;
+    if (!(event.target instanceof HTMLInputElement)) return;
+    const files = event.target.files;
     const file = files ? files[0] : '';
+
     if (!file) return;
     const filePath = `/${this.directory}/${this.id}`;
     const fileRef = this.storage.ref(filePath);

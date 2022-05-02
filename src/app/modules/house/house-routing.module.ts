@@ -14,7 +14,7 @@ const routes: Routes = [
     component: HouseComponent,
   },
   {
-    path: 'house/build',
+    path: 'house',
     canActivate: [LoggedInGuard],
     component: HouseComponent,
   },

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderService } from 'src/app/services/header/header.service';
 import { ScrollMixin } from 'src/app/mixins/scroll/scroll.mixin';
 import { HouseService } from 'src/app/services/house/house.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 @Component({
   selector: 'app-house',
   templateUrl: './house.component.html',
@@ -10,6 +11,7 @@ import { HouseService } from 'src/app/services/house/house.service';
 export class HouseComponent extends ScrollMixin implements OnInit {
   constructor(
     private headerService: HeaderService,
+    public authService: AuthService,
     public houseService: HouseService
   ) {
     super();
@@ -18,7 +20,6 @@ export class HouseComponent extends ScrollMixin implements OnInit {
   test() {}
   override onScrollAtBottom() {
     this.loadingAtBottom = true;
-    console.log('djawdjlawjdkawdljdlwkj');
     setTimeout(() => {
       this.loadingAtBottom = false;
     }, 3000);

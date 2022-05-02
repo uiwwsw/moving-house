@@ -21,9 +21,16 @@ export class IsOwnGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    console.log(this.router, ' djwakldjklawd');
+    if (
+      !this.auth.userInfo.value?.admin &&
+      !this.auth.userInfo.value?.houses?.includes(next.params.id)
+    ) {
+      this.router.navigate(['/']);
+      return false;
+    }
+
+    // console.log(this.router, , ' djwakldjklawd');
     // if (this.auth.userInfo.value?.houses?.includes()) {
-    //   this.router.navigate(['/']);
     //   return false;
     // }
 
