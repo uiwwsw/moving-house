@@ -7,7 +7,7 @@ import {
 import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, last, take } from 'rxjs/operators';
 import { StorageService } from '../storage/storage.service';
 
 export interface UserInfo {
@@ -47,12 +47,7 @@ export class AuthService {
           .valueChanges()
           .pipe(debounceTime(500))
           .subscribe((x) => {
-            if (!x)
-              this.userInfoDoc!.set({
-                created: firebase.firestore.Timestamp.now(),
-              });
             this.userInfo.next(x);
-
             this.storage.set('userInfo', x);
           });
       } else {
@@ -84,9 +79,30 @@ export class AuthService {
   onLogin() {
     this.auth
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then(() => this.router.navigate(['/']));
+      .then((x) => {
+        const signupObserver = this.afs
+          .doc<UserInfo>(`users/${x.user?.uid}`)
+          .valueChanges()
+          .subscribe((x) => {
+            if (!x)
+              this.userInfoDoc!.set({
+                created: firebase.firestore.Timestamp.now(),
+              });
+            signupObserver.unsubscribe();
+          });
+        this.router.navigate(['/']);
+      });
   }
   onLogout() {
     this.auth.signOut();
+  }
+
+  onDelete() {
+    const auth = firebase.auth();
+    auth.currentUser?.delete();
+    this.userInfoDoc?.delete();
+    // TODO 이미지 파일 및 하우스 삭제 해야함
+    // this.auth
+    // this.auth.
   }
 }

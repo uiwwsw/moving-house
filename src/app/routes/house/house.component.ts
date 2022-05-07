@@ -17,7 +17,7 @@ export class HouseComponent extends ScrollMixin implements OnInit {
     super();
     this.headerService.title.next('움직이는하우스');
   }
-  test() {}
+  value = ['', '', '', '', ''];
   override onScrollAtBottom() {
     this.loadingAtBottom = true;
     setTimeout(() => {

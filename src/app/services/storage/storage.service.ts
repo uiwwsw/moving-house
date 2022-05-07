@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { AES, enc } from 'crypto-js';
 import Cookies from 'js-cookie';
+const YCW = 'dbsckddnjs870405';
 interface Payload {
   expires?: number;
   session?: true;
@@ -36,7 +38,7 @@ export class StorageService {
 
     const storage = this.getStorage(type);
     if (value)
-      storage.set(key, JSON.stringify(value), {
+      storage.set(key, AES.encrypt(JSON.stringify(value), YCW).toString(), {
         expires: payload?.expires,
       });
     else this.remove(key);
@@ -44,7 +46,8 @@ export class StorageService {
   get<T>(key: string, type: STORAGE_TYPE = STORAGE_TYPE.LOCAL) {
     const storage = this.getStorage(type);
     const value = storage.get(key);
-    if (value) return JSON.parse(value) as T;
+    if (value)
+      return JSON.parse(AES.decrypt(value, YCW).toString(enc.Utf8)) as T;
     return undefined;
   }
   remove(key: string, type: STORAGE_TYPE = STORAGE_TYPE.LOCAL) {

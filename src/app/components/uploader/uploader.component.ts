@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { NgModel } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-uploader',
@@ -12,8 +12,9 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class UploaderComponent implements OnInit {
   @Input() directory: string = '';
   @Input() id: string = '';
+  @Input() downloadURL: string = '';
+  @Output() downloadURLChange = new EventEmitter<string>();
   uploadPercent: Observable<number | undefined> | undefined;
-  downloadURL: Observable<string> | undefined;
   constructor(private storage: AngularFireStorage) {}
 
   ngOnInit(): void {}
@@ -33,7 +34,13 @@ export class UploaderComponent implements OnInit {
     // get notified when the download URL is available
     task
       .snapshotChanges()
-      .pipe(finalize(() => (this.downloadURL = fileRef.getDownloadURL())))
+      .pipe(
+        finalize(() =>
+          fileRef
+            .getDownloadURL()
+            .subscribe((x) => this.downloadURLChange.emit(x))
+        )
+      )
       .subscribe();
   }
 }

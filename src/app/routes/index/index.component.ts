@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderService } from 'src/app/services/header/header.service';
 import { ScrollMixin } from 'src/app/mixins/scroll/scroll.mixin';
+import { HeaderService } from 'src/app/services/header/header.service';
 import { HouseService } from 'src/app/services/house/house.service';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
