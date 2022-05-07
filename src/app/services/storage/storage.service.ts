@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AES, enc } from 'crypto-js';
+
 import Cookies from 'js-cookie';
-const YCW = 'dbsckddnjs870405';
+import { CryptoService } from '../crypto/crypto.service';
+
 interface Payload {
   expires?: number;
   session?: true;
@@ -16,6 +17,7 @@ enum STORAGE_TYPE {
   providedIn: 'root',
 })
 export class StorageService {
+  constructor(private cryptoService: CryptoService) {}
   getStorage(type: STORAGE_TYPE) {
     if (type === STORAGE_TYPE.COOKIE) return Cookies;
     let storage = localStorage;
@@ -38,7 +40,7 @@ export class StorageService {
 
     const storage = this.getStorage(type);
     if (value)
-      storage.set(key, AES.encrypt(JSON.stringify(value), YCW).toString(), {
+      storage.set(key, this.cryptoService.encrypt(JSON.stringify(value)), {
         expires: payload?.expires,
       });
     else this.remove(key);
@@ -46,8 +48,7 @@ export class StorageService {
   get<T>(key: string, type: STORAGE_TYPE = STORAGE_TYPE.LOCAL) {
     const storage = this.getStorage(type);
     const value = storage.get(key);
-    if (value)
-      return JSON.parse(AES.decrypt(value, YCW).toString(enc.Utf8)) as T;
+    if (value) return JSON.parse(this.cryptoService.decrypt(value)) as T;
     return undefined;
   }
   remove(key: string, type: STORAGE_TYPE = STORAGE_TYPE.LOCAL) {

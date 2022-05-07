@@ -15,6 +15,7 @@
   @include full-background();
   &::before {
     transform: scale(2);
+    pointer-events: none;
     background: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0) 0%,

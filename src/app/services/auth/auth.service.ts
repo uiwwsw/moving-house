@@ -11,6 +11,7 @@ import { debounceTime, last, take } from 'rxjs/operators';
 import { StorageService } from '../storage/storage.service';
 
 export interface UserInfo {
+  uid: string;
   admin?: true;
   houses?: string[];
   updated?: firebase.firestore.Timestamp;
@@ -26,7 +27,7 @@ export interface UserInfo {
 export class AuthService {
   private userInfoDoc?: AngularFirestoreDocument<UserInfo>;
   private userInfoDocRef?: Subscription;
-  userInfo: BehaviorSubject<UserInfo | undefined>;
+  public userInfo: BehaviorSubject<UserInfo | undefined>;
   // userInfo = new BehaviorSubject<UserInfo | undefined>(undefined);
   // private itemsCollection: AngularFirestoreCollection<any>;
   get isLoggedIn() {
@@ -80,12 +81,14 @@ export class AuthService {
     this.auth
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then((x) => {
+        const uid = x.user!.uid;
         const signupObserver = this.afs
-          .doc<UserInfo>(`users/${x.user?.uid}`)
+          .doc<UserInfo>(`users/${uid}`)
           .valueChanges()
-          .subscribe((x) => {
-            if (!x)
+          .subscribe((user) => {
+            if (!user)
               this.userInfoDoc!.set({
+                uid,
                 created: firebase.firestore.Timestamp.now(),
               });
             signupObserver.unsubscribe();
