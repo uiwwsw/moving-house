@@ -4,11 +4,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { HeaderService } from 'src/app/services/header/header.service';
 import { HouseService } from 'src/app/services/house/house.service';
 @Component({
-  selector: 'app-house',
-  templateUrl: './house.component.html',
-  styleUrls: ['./house.component.scss'],
+  selector: 'app-house-build',
+  templateUrl: './build.component.html',
+  styleUrls: ['./build.component.scss'],
 })
-export class HouseComponent extends ScrollMixin implements OnInit {
+export class HouseBuildComponent extends ScrollMixin implements OnInit {
   constructor(
     private headerService: HeaderService,
     public authService: AuthService,

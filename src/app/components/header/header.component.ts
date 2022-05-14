@@ -55,12 +55,15 @@ export class HeaderComponent implements OnInit {
   }
   hideDropDownMenu(event?: MouseEvent) {
     const buttonElement = event?.target as HTMLButtonElement | undefined;
-    if (buttonElement?.textContent)
-      switch (buttonElement?.textContent) {
-        case DROP_MENU_ACTION.LOGOUT:
-          this.authService.onLogout();
-          break;
-      }
+    if (buttonElement?.textContent) {
+      const obj: { [action: string]: () => void } = {
+        [DROP_MENU_ACTION.LOGOUT]: () => this.authService.onLogout(),
+        [DROP_MENU_ACTION.MY_HOUSE]: () => this.goPage('/house/my'),
+        [DROP_MENU_ACTION.WRITE_HOUSE]: () => this.goPage('/house'),
+      };
+      obj[buttonElement.textContent]();
+    }
+
     this.headerService.dropDownMenu.next(false);
   }
   ngOnInit(): void {}

@@ -1,0 +1,8 @@
+<app-uploader
+  *ngFor="let index of [0, 1, 2, 3, 4]"
+  [directory]="directory"
+  [id]="index + ''"
+  [(downloadURL)]="value[index]"
+></app-uploader>
+<div>{{ value[0] }}</div>
+<div>{{ value[1] }}</div>
